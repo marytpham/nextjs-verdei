@@ -29,7 +29,7 @@ export const Modal = ({ isOpen, onClose, item }: ModalProps) => {
     if (!isOpen) return null;
     const data = item?.data;
     return (
-        <div className="grid grid-cols-2 fixed inset-0 z-50 flex items-center justify-center bg-black/50 " onClick={onClose}>
+        <div className=" fixed inset-0 z-50 flex items-center justify-center bg-black/50 " onClick={onClose}>
             <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-6 max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                 <h2 className="text-2xl font-bold text-black dark:text-white mb-2">{item?.title}</h2>
                 <p className="text-zinc-600 dark:text-zinc-300 mb-4">{item?.description}</p>
