@@ -76,6 +76,7 @@ async function loadCompaniesFromCSV(): Promise<BackendCompanyData[]> {
       const emissions = parseFloat(row.all_total_emissions);
       const metrics = parseFloat(row.metrics); // model outputs / metrics quality
       const strategy = parseFloat(row.strategy);
+      const riskValue = parseFloat(row.risk); // risk metric from CSV
 
       const greenwashingScore = isNaN(spec) ? 50 : Math.round(spec * 100);
       const esgScore = isNaN(relate) || isNaN(commit) ? 50 : Math.round(((relate * 100 + commit * 100) / 2));
@@ -100,10 +101,13 @@ async function loadCompaniesFromCSV(): Promise<BackendCompanyData[]> {
       const commitmentRating = scoreToStars((commit || 0) * 100); // Commitment score (0-1 -> 0-100)
       const greenwashRating = scoreToStars((spec || 0) * 100); // Specificity / Greenwash score
 
-      // Compute risk level based on data
+      // Compute risk level based on risk column (inverted: higher risk value = lower risk rating)
       let riskLevel: 'High' | 'Medium' | 'Low' = 'Medium';
-      if (greenwashingScore < 30) riskLevel = 'High';
-      else if (greenwashingScore > 70) riskLevel = 'Low';
+      if (!isNaN(riskValue)) {
+        const riskPercentage = riskValue * 100;
+        if (riskPercentage > 5) riskLevel = 'Low'; // Higher risk value = Low risk rating
+        else if (riskPercentage < 2) riskLevel = 'High'; // Lower risk value = High risk rating
+      }
 
       // Calculate overall star rating (1-5) based on: commitment, spec (greenwash), relate (relatedness), emissions (lower is better), ESG score
       // Weighted scoring: commitment (25%), spec (25%), relate (20%), ESG score (20%), emissions factor (10%)
