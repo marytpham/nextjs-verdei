@@ -184,16 +184,6 @@ export default function Home() {
           <p className="max-w-xl text-lg leading-6 text-zinc-600 dark:text-zinc-400">
             Instantly verify a company's sustainability claims against hard, quantifiable evidence. Look at our transparent Verde-i Trust Score before you buy or support.
           </p>
-          
-          <div className="max-w-2xl mx-auto mb-6 space-y-3" style={{ fontFamily: 'Georgia, serif' }}>
-            <h3 className="font-bold text-xl text-[#076912]">Unmasking Corporate Sustainability</h3>
-            <p className="text-lg font-bold text-gray-800">
-              Real data. Real language. No greenwashing.
-            </p>
-            <p className="text-base text-gray-700">
-              We merge EPA-verified emissions, ESG scores, and AI climate-language analysis to expose inconsistencies and bring transparency to corporate environmental claims.
-            </p>
-          </div>
 
           <div className="flex flex-col gap-8 text-base font-medium sm:flex-row">
             <a
