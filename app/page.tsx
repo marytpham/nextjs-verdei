@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Card, type BackendCompanyData } from "./src/card";
 import { Infocard } from "./src/infocard";
 import { Modal, type ModalItem } from "./src/modal";
+import { ScatterPlot } from "./src/scatterplot";
+import { EmissionsBarChart } from "./src/barchart";
 
 // Parse CSV data from main_dataset_2024.csv
 async function loadCompaniesFromCSV(): Promise<BackendCompanyData[]> {
@@ -146,6 +148,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ModalItem | undefined>(undefined);
   const [companies, setCompanies] = useState<BackendCompanyData[]>([]);
+  const [activeTab, setActiveTab] = useState<'metrics' | 'graphs'>('metrics');
 
   // Load CSV data on component mount
   useEffect(() => {
@@ -181,6 +184,17 @@ export default function Home() {
           <p className="max-w-xl text-lg leading-6 text-zinc-600 dark:text-zinc-400">
             Instantly verify a company's sustainability claims against hard, quantifiable evidence. Look at our transparent Verde-i Trust Score before you buy or support.
           </p>
+          
+          <div className="max-w-2xl mx-auto mb-6 space-y-3" style={{ fontFamily: 'Georgia, serif' }}>
+            <h3 className="font-bold text-xl text-[#076912]">Unmasking Corporate Sustainability</h3>
+            <p className="text-lg font-bold text-gray-800">
+              Real data. Real language. No greenwashing.
+            </p>
+            <p className="text-base text-gray-700">
+              We merge EPA-verified emissions, ESG scores, and AI climate-language analysis to expose inconsistencies and bring transparency to corporate environmental claims.
+            </p>
+          </div>
+
           <div className="flex flex-col gap-8 text-base font-medium sm:flex-row">
             <a
               className="flex h-12 w-max items-center justify-center gap-2 rounded-full bg-[#076912] px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
@@ -201,12 +215,215 @@ export default function Home() {
       </main>
 
        <section className="relative flex min-h-full w-full items-center justify-center bg-white p-12">
-        <div className="max-w-3xl text-center">
-          <h2 className="text-3xl font-semibold text-black dark:text-white mb-4">What We Measure</h2>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6">
-            This section is intentionally empty so you can add more content as you scroll. Replace this placeholder with sections, cards, or any components you need.
-          </p>
+        <div className="max-w-6xl w-full">
+          {/* Tab Navigation */}
+          <div className="flex justify-center gap-4 mb-8">
+            <button
+              onClick={() => setActiveTab('metrics')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'metrics'
+                  ? 'bg-[#076912] text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Measures & Metrics
+            </button>
+            <button
+              onClick={() => setActiveTab('graphs')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'graphs'
+                  ? 'bg-[#076912] text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Data Visualizations
+            </button>
+          </div>
+
+          {/* Metrics Tab Content */}
+          {activeTab === 'metrics' && (
+            <div>
+              <h2 className="text-3xl font-semibold text-black mb-6 text-center">🌡️ Measures & Metrics: How We Quantify Greenwashing</h2>
+              <p className="text-lg text-gray-700 mb-4 text-center max-w-4xl mx-auto">
+                To expose the gap between what companies say and what they emit, we integrate verified EPA greenhouse gas emissions, ESG environmental scores, and AI-driven climate language analysis. This multi-layered approach gives us a transparent, empirical way to measure sustainability truthfulness.
+              </p>
+              <p className="text-base text-gray-600 mb-8 text-center">
+                Below are the core metrics powering our analysis.
+              </p>
+
+          {/* Metrics Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* EPA Emissions Data Card */}
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow cursor-pointer group">
+              <div className="text-4xl mb-3">📍</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#076912] transition-colors">
+                EPA Emissions Data — The Ground Truth
+              </h3>
+              <p className="text-sm text-gray-600 mb-3">
+                We use emissions data from the EPA Greenhouse Gas Reporting Program (GHGRP), established in 2009 requiring major emitters to report annual greenhouse gas emissions.
+              </p>
+              <details className="text-sm text-gray-700">
+                <summary className="cursor-pointer font-medium text-[#076912] hover:underline mb-2">
+                  Learn more →
+                </summary>
+                <div className="mt-3 space-y-3 pl-2 border-l-2 border-gray-200">
+                  <div>
+                    <p className="font-semibold mb-1">What it measures:</p>
+                    <ul className="list-disc list-inside space-y-1 text-xs">
+                      <li>Direct (Scope 1) emissions from facilities emitting 25,000+ metric tons CO₂e per year</li>
+                      <li>Power plants, refineries, chemical plants, steel mills, pipelines, and more</li>
+                      <li>85–90% of U.S. industrial emissions across 8,000+ facilities</li>
+                      <li>Standardized reporting under 40 CFR Part 98</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-1">What it doesn't measure:</p>
+                    <ul className="list-disc list-inside space-y-1 text-xs">
+                      <li>Scope 2 emissions (purchased electricity)</li>
+                      <li>Scope 3 emissions (supply chains, products, logistics)</li>
+                      <li>Small emitters, tech offices, warehouses, global operations</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-1">Why we still use it:</p>
+                    <p className="text-xs">
+                      Although EPA data is self-reported, it is the most complete, regulated, and publicly available emissions dataset in the United States. We supplement with self-reported Scope 2/3 disclosures for comprehensive estimates.
+                    </p>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            {/* ESG Environmental Scores Card */}
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow cursor-pointer group">
+              <div className="text-4xl mb-3">📊</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#076912] transition-colors">
+                ESG Environmental Scores — What Companies Claim
+              </h3>
+              <p className="text-sm text-gray-600 mb-3">
+                ESG agencies claim to measure "a company's environmental impact, including carbon emissions, waste, pollution, water usage, biodiversity, and climate risk management."
+              </p>
+              <details className="text-sm text-gray-700">
+                <summary className="cursor-pointer font-medium text-[#076912] hover:underline mb-2">
+                  Learn more →
+                </summary>
+                <div className="mt-3 space-y-3 pl-2 border-l-2 border-gray-200">
+                  <div>
+                    <p className="font-semibold mb-2">But ESG systems suffer from major flaws:</p>
+                    <ul className="space-y-2 text-xs">
+                      <li><span className="font-semibold">❌ Poor availability:</span> Data is paywalled and expensive, limiting transparency.</li>
+                      <li><span className="font-semibold">❌ Poor compatibility:</span> No standard method — different firms give different scores for the same company.</li>
+                      <li><span className="font-semibold">❌ Lack of transparency:</span> Rating formulas are private, unregulated, and often arbitrary.</li>
+                    </ul>
+                  </div>
+                  <div className="bg-red-50 p-3 rounded">
+                    <p className="font-bold text-sm mb-1">💥 Key finding:</p>
+                    <p className="text-xs font-semibold">There is no meaningful correlation between a company's total emissions and its ESG Environmental Score.</p>
+                    <ul className="list-disc list-inside mt-2 space-y-1 text-xs">
+                      <li>Big polluters can receive high ESG scores</li>
+                      <li>Low-emission companies can receive poor scores</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            {/* Climate Language Metrics Card */}
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow cursor-pointer group">
+              <div className="text-4xl mb-3">🤖</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#076912] transition-colors">
+                Climate Language Metrics — Analyzing What Companies Say
+              </h3>
+              <p className="text-sm text-gray-600 mb-3">
+                We process sustainability reports using ClimateBERT, a transformer model trained specifically on climate disclosures, extracting five core metrics.
+              </p>
+              <details className="text-sm text-gray-700">
+                <summary className="cursor-pointer font-medium text-[#076912] hover:underline mb-2">
+                  Learn more →
+                </summary>
+                <div className="mt-3 space-y-3 pl-2 border-l-2 border-gray-200">
+                  <div>
+                    <p className="font-semibold text-xs">Relatedness:</p>
+                    <p className="text-xs">How many sentences actually discuss climate, carbon, emissions, or environmental strategy.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-xs">Specificity:</p>
+                    <p className="text-xs">Whether claims include numerical targets, deadlines, and measurable actions vs. vague statements.</p>
+                    <p className="text-xs italic mt-1">High: "Reduce Scope 1 emissions 40% by 2030, with $500M allocated."</p>
+                    <p className="text-xs italic">Low: "We are committed to building a greener future."</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-xs">Sentiment:</p>
+                    <p className="text-xs">Tone from financial perspective: risk (threats), neutral (factual), or opportunity (business upside).</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-xs">Commitment:</p>
+                    <p className="text-xs">Real pledges like emission targets, net-zero timelines, clean energy purchasing, or just PR messaging.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-xs">TCFD Subcategories:</p>
+                    <p className="text-xs">Classifies sentences into Metrics, Strategy, Governance, or Risk to reveal balanced vs. cherry-picked reporting.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          {/* Greenwash Residual Index Card - Full Width */}
+          <div className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200 rounded-lg p-8 shadow-lg">
+            <div className="text-center mb-4">
+              <div className="text-5xl mb-3">🧮</div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                The Greenwash Residual Index — Measuring the "Talk vs Walk" Gap
+              </h3>
+              <p className="text-base text-gray-700 max-w-3xl mx-auto">
+                To quantify greenwashing, we compare a company's climate language profile with its actual emissions.
+              </p>
+            </div>
+            
+            <details className="text-sm text-gray-700">
+              <summary className="cursor-pointer font-semibold text-lg text-[#076912] hover:underline mb-4 text-center">
+                See how we calculate it →
+              </summary>
+              <div className="mt-4 space-y-4 max-w-3xl mx-auto">
+                <div className="bg-white p-4 rounded-lg border border-gray-200">
+                  <p className="font-semibold mb-2">Step 1 — Predict Emissions from Language</p>
+                  <p className="text-xs">We train a Random Forest model that predicts emissions based solely on climate language metrics.</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg border border-gray-200">
+                  <p className="font-semibold mb-2">Step 2 — Compare Predicted vs Actual Emissions</p>
+                  <p className="text-xs font-mono bg-gray-100 p-2 rounded">Greenwash Residual = actual emissions − predicted emissions</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg border border-gray-200">
+                  <p className="font-semibold mb-2">Step 3 — Standardize</p>
+                  <p className="text-xs">We convert this to a z-score, forming our final metric:</p>
+                  <div className="mt-3 bg-green-50 p-4 rounded border border-green-200">
+                    <p className="font-bold text-center text-base">⭐ Greenwash Residual Index (GRI)</p>
+                    <p className="text-xs text-center mt-2">A higher score = stronger evidence of greenwashing</p>
+                  </div>
+                </div>
+                <p className="text-xs text-center text-gray-600 italic">
+                  This allows transparency, comparability, and interpretability across industries.
+                </p>
+              </div>
+            </details>
+          </div>
+
           <Infocard />
+            </div>
+          )}
+
+          {/* Graphs Tab Content */}
+          {activeTab === 'graphs' && (
+            <div className="space-y-12">
+              <div className="bg-gray-50 p-8 rounded-lg">
+                <ScatterPlot />
+              </div>
+              <div className="bg-white p-8 rounded-lg">
+                <EmissionsBarChart />
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
