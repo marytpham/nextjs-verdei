@@ -362,28 +362,69 @@ export default function Home() {
                 <summary className="cursor-pointer font-medium text-[#076912] hover:underline mb-2">
                   Learn more →
                 </summary>
-                <div className="mt-3 space-y-3 pl-2 border-l-2 border-gray-200">
-                  <div>
-                    <p className="font-semibold mb-1">What it measures:</p>
-                    <ul className="list-disc list-inside space-y-1 text-xs">
-                      <li>Direct (Scope 1) emissions from facilities emitting 25,000+ metric tons CO₂e per year</li>
-                      <li>Power plants, refineries, chemical plants, steel mills, pipelines, and more</li>
-                      <li>85–90% of U.S. industrial emissions across 8,000+ facilities</li>
-                      <li>Standardized reporting under 40 CFR Part 98</li>
-                    </ul>
+                <div className="mt-3 space-y-4">
+                  {/* What it measures */}
+                  <div className="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+                    <div className="flex items-start gap-2 mb-2">
+                      <svg className="w-4 h-4 text-green-700 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <p className="font-bold text-green-900 text-xs">What it measures:</p>
+                    </div>
+                    <div className="ml-6 space-y-1.5 text-[0.7rem]">
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">•</span>
+                        <p><span className="font-semibold">Direct (Scope 1)</span> emissions from facilities emitting 25,000+ metric tons CO₂e per year</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">•</span>
+                        <p>Power plants, refineries, chemical plants, steel mills, pipelines, and more</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">•</span>
+                        <p><span className="font-semibold">85–90%</span> of U.S. industrial emissions across <span className="font-semibold">8,000+ facilities</span></p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">•</span>
+                        <p>Standardized reporting under <span className="font-mono text-[0.65rem] bg-green-100 px-1 rounded">40 CFR Part 98</span></p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold mb-1">What it doesn't measure:</p>
-                    <ul className="list-disc list-inside space-y-1 text-xs">
-                      <li>Scope 2 emissions (purchased electricity)</li>
-                      <li>Scope 3 emissions (supply chains, products, logistics)</li>
-                      <li>Small emitters, tech offices, warehouses, global operations</li>
-                    </ul>
+
+                  {/* What it doesn't measure */}
+                  <div className="bg-red-50 p-3 rounded-lg border-l-4 border-red-500">
+                    <div className="flex items-start gap-2 mb-2">
+                      <svg className="w-4 h-4 text-red-700 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                      <p className="font-bold text-red-900 text-xs">What it doesn't measure:</p>
+                    </div>
+                    <div className="ml-6 space-y-1.5 text-[0.7rem]">
+                      <div className="flex items-start gap-2">
+                        <span className="text-red-600 font-bold">✗</span>
+                        <p><span className="font-semibold">Scope 2</span> emissions (purchased electricity)</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-red-600 font-bold">✗</span>
+                        <p><span className="font-semibold">Scope 3</span> emissions (supply chains, products, logistics)</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-red-600 font-bold">✗</span>
+                        <p>Small emitters, tech offices, warehouses, global operations</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold mb-1">Why we still use it:</p>
-                    <p className="text-xs">
-                      Although EPA data is self-reported, it is the most complete, regulated, and publicly available emissions dataset in the United States. We supplement with self-reported Scope 2/3 disclosures for comprehensive estimates.
+
+                  {/* Why we still use it */}
+                  <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500">
+                    <div className="flex items-start gap-2 mb-2">
+                      <svg className="w-4 h-4 text-blue-700 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      <p className="font-bold text-blue-900 text-xs">Why we still use it:</p>
+                    </div>
+                    <p className="text-[0.7rem] ml-6 text-gray-700 leading-relaxed">
+                      Although EPA data is <span className="font-semibold">self-reported</span>, it is the most <span className="font-semibold text-blue-900">complete, regulated, and publicly available</span> emissions dataset in the United States. We supplement with self-reported Scope 2/3 disclosures for comprehensive estimates.
                     </p>
                   </div>
                 </div>
@@ -465,28 +506,51 @@ export default function Home() {
                 <summary className="cursor-pointer font-medium text-[#076912] hover:underline mb-2">
                   Learn more →
                 </summary>
-                <div className="mt-3 space-y-3 pl-2 border-l-2 border-gray-200">
-                  <div>
-                    <p className="font-semibold text-xs">Relatedness:</p>
-                    <p className="text-xs">How many sentences actually discuss climate, carbon, emissions, or environmental strategy.</p>
+                <div className="mt-3 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-xs text-blue-900">Relatedness:</p>
+                      <p className="text-xs">Filters sentences for actual climate discussion vs. generic corporate language.</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-xs">Specificity:</p>
-                    <p className="text-xs">Whether claims include numerical targets, deadlines, and measurable actions vs. vague statements.</p>
-                    <p className="text-xs italic mt-1">High: "Reduce Scope 1 emissions 40% by 2030, with $500M allocated."</p>
-                    <p className="text-xs italic">Low: "We are committed to building a greener future."</p>
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-xs text-purple-900">Specificity:</p>
+                      <p className="text-xs">Detects concrete targets with numbers and dates vs. vague promises.</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-xs">Sentiment:</p>
-                    <p className="text-xs">Tone from financial perspective: risk (threats), neutral (factual), or opportunity (business upside).</p>
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-xs text-green-900">Sentiment:</p>
+                      <p className="text-xs">Classifies tone as risk (threat), neutral (factual), or opportunity (business upside).</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-xs">Commitment:</p>
-                    <p className="text-xs">Real pledges like emission targets, net-zero timelines, clean energy purchasing, or just PR messaging.</p>
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-xs text-amber-900">Commitment:</p>
+                      <p className="text-xs">Identifies real pledges with emission targets and timelines vs. PR messaging.</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-xs">TCFD Subcategories:</p>
-                    <p className="text-xs">Classifies sentences into Metrics, Strategy, Governance, or Risk to reveal balanced vs. cherry-picked reporting.</p>
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-xs text-indigo-900">TCFD Subcategories:</p>
+                      <p className="text-xs">Sorts into Metrics, Strategy, Governance, or Risk to reveal balanced vs. cherry-picked reporting.</p>
+                    </div>
                   </div>
                 </div>
               </details>
@@ -548,21 +612,26 @@ export default function Home() {
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 About ClimateBERT — Our AI Analysis Pipeline
               </h3>
-              <p className="text-base text-gray-700 max-w-3xl mx-auto">
+              <p className="text-base text-gray-700 max-w-3xl mx-auto mb-4">
                 We use specialized AI models trained specifically on climate disclosure documents to extract and analyze language patterns from corporate sustainability reports.
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto space-y-6">
-              {/* Pipeline Overview */}
-              <div className="bg-white p-6 rounded-lg border border-gray-200">
-                <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                  </svg>
-                  Our Analysis Pipeline
-                </h4>
-                <p className="text-sm text-gray-700 mb-4">
+            <details className="max-w-4xl mx-auto">
+              <summary className="cursor-pointer font-semibold text-lg text-[#076912] hover:underline mb-4 text-center">
+                See technical details →
+              </summary>
+              
+              <div className="space-y-6 mt-6">
+                {/* Pipeline Overview */}
+                <div className="bg-white p-6 rounded-lg border border-gray-200">
+                  <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                    </svg>
+                    Our Analysis Pipeline
+                  </h4>
+                  <p className="text-sm text-gray-700 mb-4">
                   We process sustainability reports through a series of specialized ClimateBERT models to extract five core climate language metrics:
                 </p>
                 
@@ -697,6 +766,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
+            </details>
           </div>
 
           <Infocard />
