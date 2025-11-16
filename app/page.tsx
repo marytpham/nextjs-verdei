@@ -537,6 +537,168 @@ export default function Home() {
             </details>
           </div>
 
+          {/* ClimateBERT Technical Details Card - Full Width */}
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-lg p-8 shadow-lg">
+            <div className="text-center mb-6">
+              <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-200 to-purple-200 rounded-xl flex items-center justify-center">
+                <svg className="w-10 h-10 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                About ClimateBERT — Our AI Analysis Pipeline
+              </h3>
+              <p className="text-base text-gray-700 max-w-3xl mx-auto">
+                We use specialized AI models trained specifically on climate disclosure documents to extract and analyze language patterns from corporate sustainability reports.
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto space-y-6">
+              {/* Pipeline Overview */}
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                  </svg>
+                  Our Analysis Pipeline
+                </h4>
+                <p className="text-sm text-gray-700 mb-4">
+                  We process sustainability reports through a series of specialized ClimateBERT models to extract five core climate language metrics:
+                </p>
+                
+                <div className="space-y-4">
+                  {/* Relatedness */}
+                  <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                    <div className="flex items-start gap-3">
+                      <div className="font-bold text-blue-900 text-lg">1.</div>
+                      <div className="flex-1">
+                        <h5 className="font-bold text-blue-900 mb-1">Relatedness</h5>
+                        <p className="text-sm text-gray-700 mb-2">
+                          <span className="font-semibold">What it measures:</span> How much of the text actually discusses climate-related topics. The model labels each sentence as "yes" or "no" for climate relevance.
+                        </p>
+                        <div className="bg-white p-2 rounded text-xs space-y-1">
+                          <p><span className="font-semibold text-green-700">High relatedness →</span> Text is genuinely about climate issues</p>
+                          <p><span className="font-semibold text-orange-700">Low relatedness →</span> Includes generic or off-topic corporate language</p>
+                          <p className="italic text-gray-600 mt-2">We only keep the "yes" sentences for further analysis.</p>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-2 italic">
+                          Model: <a href="https://huggingface.co/climatebert/distilroberta-base-climate-f" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">climatebert/distilroberta-base-climate-f</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Specificity */}
+                  <div className="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                    <div className="flex items-start gap-3">
+                      <div className="font-bold text-purple-900 text-lg">2.</div>
+                      <div className="flex-1">
+                        <h5 className="font-bold text-purple-900 mb-1">Specificity</h5>
+                        <p className="text-sm text-gray-700 mb-2">
+                          <span className="font-semibold">What it measures:</span> Whether climate-related statements are specific, detailed, and quantitative.
+                        </p>
+                        <div className="bg-white p-2 rounded text-xs space-y-1">
+                          <p><span className="font-semibold text-green-700">High specificity →</span> Concrete details (numeric targets, measurable actions)</p>
+                          <p><span className="font-semibold text-orange-700">Low specificity →</span> Vague promises or high-level claims</p>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-2 italic">
+                          Model: <a href="https://huggingface.co/climatebert/distilroberta-base-climate-specificity" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">climatebert/distilroberta-base-climate-specificity</a>
+                        </p>
+                        <p className="text-xs text-amber-700 mt-1 font-semibold">⚠️ Note: This model is trained on paragraphs and may not perform well on sentences.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Sentiment */}
+                  <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                    <div className="flex items-start gap-3">
+                      <div className="font-bold text-green-900 text-lg">3.</div>
+                      <div className="flex-1">
+                        <h5 className="font-bold text-green-900 mb-1">Sentiment (Risk / Neutral / Opportunity)</h5>
+                        <p className="text-sm text-gray-700 mb-2">
+                          <span className="font-semibold">What it measures:</span> The tone of climate discussion from a financial impact perspective.
+                        </p>
+                        <div className="bg-white p-2 rounded text-xs space-y-1">
+                          <p><span className="font-semibold text-red-700">"risk" →</span> Climate is a threat</p>
+                          <p><span className="font-semibold text-gray-700">"neutral" →</span> Descriptive/factual</p>
+                          <p><span className="font-semibold text-green-700">"opportunity" →</span> Climate is a beneficial market opportunity</p>
+                        </div>
+                        <div className="bg-blue-50 p-2 rounded text-xs mt-2">
+                          <p className="font-semibold mb-1">Our scoring scale:</p>
+                          <p>risk = 2, neutral = 1, opportunity = 0</p>
+                          <p className="mt-1 italic">Normalized to [0,1]: 1 = mostly risk, 0 = mostly opportunity</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Commitment */}
+                  <div className="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
+                    <div className="flex items-start gap-3">
+                      <div className="font-bold text-amber-900 text-lg">4.</div>
+                      <div className="flex-1">
+                        <h5 className="font-bold text-amber-900 mb-1">Commitment</h5>
+                        <p className="text-sm text-gray-700 mb-2">
+                          <span className="font-semibold">What it measures:</span> Whether the text includes actual climate commitments.
+                        </p>
+                        <div className="bg-white p-2 rounded text-xs space-y-1">
+                          <p>• Emissions targets</p>
+                          <p>• Renewable energy commitments</p>
+                          <p>• Investment plans</p>
+                          <p>• Forward-looking pledges</p>
+                        </div>
+                        <p className="text-xs text-gray-600 mt-2 italic">
+                          Higher commitment → The company is stating measurable intentions, not just describing climate issues.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* TCFD */}
+                  <div className="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                    <div className="flex items-start gap-3">
+                      <div className="font-bold text-indigo-900 text-lg">5.</div>
+                      <div className="flex-1">
+                        <h5 className="font-bold text-indigo-900 mb-1">TCFD Subcategories</h5>
+                        <p className="text-sm text-gray-700 mb-3">
+                          Following the <span className="font-semibold">Task Force on Climate-Related Financial Disclosures (TCFD)</span> framework, we classify each climate-related statement into one of four categories:
+                        </p>
+                        <div className="space-y-2">
+                          <div className="bg-white p-3 rounded border border-indigo-200">
+                            <p className="font-semibold text-sm text-indigo-900">Metrics</p>
+                            <p className="text-xs text-gray-700">Quantitative climate data (emissions, KPIs, energy use)</p>
+                          </div>
+                          <div className="bg-white p-3 rounded border border-indigo-200">
+                            <p className="font-semibold text-sm text-indigo-900">Strategy</p>
+                            <p className="text-xs text-gray-700">How the company plans to operate in a low-carbon economy (transition plans, scenario analysis, decarbonization strategy)</p>
+                          </div>
+                          <div className="bg-white p-3 rounded border border-indigo-200">
+                            <p className="font-semibold text-sm text-indigo-900">Governance</p>
+                            <p className="text-xs text-gray-700">Oversight structure (board committees, executive responsibility, management roles)</p>
+                          </div>
+                          <div className="bg-white p-3 rounded border border-indigo-200">
+                            <p className="font-semibold text-sm text-indigo-900">Risk</p>
+                            <p className="text-xs text-gray-700">Climate-related risks (physical risks like wildfires/storms, transition risks like carbon pricing or regulation)</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-600 mt-3 italic">
+                          TCFD scores in our output are normalized proportions showing how companies balance disclosure across these four pillars.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technical Note */}
+              <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-4 rounded-lg border border-blue-300">
+                <p className="text-sm text-gray-800">
+                  <span className="font-bold text-blue-900">Technical Foundation:</span> ClimateBERT models are transformer-based language models fine-tuned specifically on climate disclosure documents, providing domain-specific accuracy far beyond general-purpose NLP tools.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <Infocard />
             </div>
           )}
