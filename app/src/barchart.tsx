@@ -454,10 +454,15 @@ export function EmissionsBarChart() {
         Top 10 Companies by Total Emissions
       </h3>
       <div className="max-w-3xl mx-auto mb-6">
-        <p className="text-base text-gray-700 leading-relaxed text-center mb-2">
-          <span className="font-semibold">7 out of 10</span> of the companies with the most emissions received <span className="font-semibold">excellent/high ESG environmental scores</span> and <span className="font-semibold">no companies received low scores.</span>
-        </p>
-        <p className="text-sm text-gray-600 text-center">
+        <div className="bg-gradient-to-r from-orange-50 to-red-50 border-l-4 border-orange-500 p-4 mb-4">
+          <p className="text-lg font-bold text-orange-900 leading-relaxed text-center">
+            7 out of 10 of the companies with the most emissions received excellent/high ESG environmental scores and no companies received low scores.
+          </p>
+        </div>
+        <p className="text-sm text-gray-500 text-center italic flex items-center justify-center gap-2">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+          </svg>
           Hover over bars to see detailed information including environmental grades
         </p>
       </div>

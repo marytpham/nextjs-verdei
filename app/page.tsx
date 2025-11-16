@@ -7,6 +7,7 @@ import { Infocard } from "./src/infocard";
 import { Modal, type ModalItem } from "./src/modal";
 import { ScatterPlot } from "./src/scatterplot";
 import { EmissionsBarChart } from "./src/barchart";
+import { TCFDPieCharts } from "./src/tcfdpiechart";
 
 // Parse CSV data from main_dataset_2024.csv
 async function loadCompaniesFromCSV(): Promise<BackendCompanyData[]> {
@@ -33,13 +34,35 @@ async function loadCompaniesFromCSV(): Promise<BackendCompanyData[]> {
       return [];
     }
 
-    const headers = lines[0].split(',').map(h => h.trim());
+    // Proper CSV parsing function that handles commas in fields
+    const parseCSVLine = (line: string): string[] => {
+      const result: string[] = [];
+      let current = '';
+      let inQuotes = false;
+      
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result;
+    };
+
+    const headers = parseCSVLine(lines[0]);
     const companies: BackendCompanyData[] = [];
 
     for (let i = 1; i < lines.length; i++) {
       if (!lines[i].trim()) continue; // Skip empty lines
       
-      const values = lines[i].split(',');
+      const values = parseCSVLine(lines[i]);
       const row: Record<string, string> = {};
       
       headers.forEach((header, idx) => {
@@ -148,7 +171,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ModalItem | undefined>(undefined);
   const [companies, setCompanies] = useState<BackendCompanyData[]>([]);
-  const [activeTab, setActiveTab] = useState<'metrics' | 'graphs'>('metrics');
+  const [activeTab, setActiveTab] = useState<'mission' | 'metrics' | 'graphs'>('mission');
 
   // Load CSV data on component mount
   useEffect(() => {
@@ -185,29 +208,31 @@ export default function Home() {
             Instantly verify a company's sustainability claims against hard, quantifiable evidence. Look at our transparent Verde-i Trust Score before you buy or support.
           </p>
 
-          <div className="flex flex-col gap-8 text-base font-medium sm:flex-row">
+          <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
             <a
-              className="flex h-12 w-max items-center justify-center gap-2 rounded-full bg-[#076912] px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#company-reports"
+              className="flex h-12 w-max items-center justify-center gap-2 rounded-full bg-[#076912] px-5 text-white transition-colors hover:bg-[#054d0e] cursor-pointer"
             >
               Find Company Reports
-            </a>
-            <a
-              className="flex h-12 w-max items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors bg-white opacity-56 text-[#076912] hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              See how scoring works
             </a>
           </div>
         </div>
       </main>
 
-       <section className="relative flex min-h-full w-full items-center justify-center bg-white p-12">
+       <section id="metrics-section" className="relative flex min-h-full w-full items-center justify-center bg-white p-12">
         <div className="max-w-6xl w-full">
           {/* Tab Navigation */}
           <div className="flex justify-center gap-4 mb-8">
+            <button
+              onClick={() => setActiveTab('mission')}
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'mission'
+                  ? 'bg-[#076912] text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Our Mission
+            </button>
             <button
               onClick={() => setActiveTab('metrics')}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
@@ -226,14 +251,87 @@ export default function Home() {
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              Data Visualizations
+              Our Research
             </button>
           </div>
+
+          {/* Our Mission Tab Content */}
+          {activeTab === 'mission' && (
+            <div className="max-w-6xl mx-auto">
+              {/* Hero Section */}
+              <div className="text-center mb-16">
+                <h2 className="text-5xl font-bold text-[#076912] mb-6 leading-tight">
+                  Unmasking Corporate<br />Sustainability
+                </h2>
+                <p className="text-2xl text-gray-600 font-light max-w-3xl mx-auto">
+                  Exposing Greenwashing Through Data & Language Analysis
+                </p>
+              </div>
+
+              {/* Key Points Grid */}
+              <div className="grid md:grid-cols-3 gap-8 mb-16">
+                <div className="text-center p-6">
+                  <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-red-100 to-red-50 rounded-full flex items-center justify-center">
+                    <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">The Problem</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    ESG ratings are hidden behind paywalls and opaque methods, allowing companies to appear "green" while harming the planet.
+                  </p>
+                </div>
+                
+                <div className="text-center p-6 bg-[#076912] text-white rounded-lg shadow-lg transform scale-105">
+                  <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">Our Solution</h3>
+                  <p className="leading-relaxed">
+                    We combine EPA emissions data, ESG scores, and AI language analysis to reveal the truth.
+                  </p>
+                </div>
+                
+                <div className="text-center p-6">
+                  <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
+                    <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Our Focus</h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    U.S. companies with the highest emissions — from the world's second-largest CO₂ emitter.
+                  </p>
+                </div>
+              </div>
+
+              {/* Visualization Section */}
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                <h3 className="text-3xl font-bold text-gray-900 mb-6 text-center">Global CO₂ Emissions Per Capita</h3>
+                <div className="bg-white rounded-lg shadow-inner p-4">
+                  <iframe 
+                    src="https://ourworldindata.org/grapher/co-emissions-per-capita?tab=line" 
+                    loading="lazy" 
+                    className="w-full h-[600px] border-0 rounded" 
+                    allow="web-share; clipboard-write"
+                    title="CO2 Emissions Per Capita"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Metrics Tab Content */}
           {activeTab === 'metrics' && (
             <div>
-              <h2 className="text-3xl font-semibold text-black mb-6 text-center">🌡️ Measures & Metrics: How We Quantify Greenwashing</h2>
+              <h2 className="text-3xl font-semibold text-black mb-6 text-center flex items-center justify-center gap-3">
+                <svg className="w-8 h-8 text-[#076912]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Measures & Metrics: How We Quantify Greenwashing
+              </h2>
               <p className="text-lg text-gray-700 mb-4 text-center max-w-4xl mx-auto">
                 To expose the gap between what companies say and what they emit, we integrate verified EPA greenhouse gas emissions, ESG environmental scores, and AI-driven climate language analysis. This multi-layered approach gives us a transparent, empirical way to measure sustainability truthfulness.
               </p>
@@ -245,7 +343,11 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {/* EPA Emissions Data Card */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow cursor-pointer group">
-              <div className="text-4xl mb-3">📍</div>
+              <div className="w-16 h-16 mb-3 bg-gradient-to-br from-green-100 to-green-50 rounded-lg flex items-center justify-center">
+                <svg className="w-8 h-8 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+              </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#076912] transition-colors">
                 EPA Emissions Data — The Ground Truth
               </h3>
@@ -286,7 +388,11 @@ export default function Home() {
 
             {/* ESG Environmental Scores Card */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow cursor-pointer group">
-              <div className="text-4xl mb-3">📊</div>
+              <div className="w-16 h-16 mb-3 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg flex items-center justify-center">
+                <svg className="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#076912] transition-colors">
                 ESG Environmental Scores — What Companies Claim
               </h3>
@@ -301,13 +407,33 @@ export default function Home() {
                   <div>
                     <p className="font-semibold mb-2">But ESG systems suffer from major flaws:</p>
                     <ul className="space-y-2 text-xs">
-                      <li><span className="font-semibold">❌ Poor availability:</span> Data is paywalled and expensive, limiting transparency.</li>
-                      <li><span className="font-semibold">❌ Poor compatibility:</span> No standard method — different firms give different scores for the same company.</li>
-                      <li><span className="font-semibold">❌ Lack of transparency:</span> Rating formulas are private, unregulated, and often arbitrary.</li>
+                      <li className="flex items-start gap-2">
+                        <svg className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        <span><span className="font-semibold">Poor availability:</span> Data is paywalled and expensive, limiting transparency.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <svg className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        <span><span className="font-semibold">Poor compatibility:</span> No standard method — different firms give different scores for the same company.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <svg className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                        </svg>
+                        <span><span className="font-semibold">Lack of transparency:</span> Rating formulas are private, unregulated, and often arbitrary.</span>
+                      </li>
                     </ul>
                   </div>
                   <div className="bg-red-50 p-3 rounded">
-                    <p className="font-bold text-sm mb-1">💥 Key finding:</p>
+                    <p className="font-bold text-sm mb-1 flex items-center gap-2">
+                      <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      Key finding:
+                    </p>
                     <p className="text-xs font-semibold">There is no meaningful correlation between a company's total emissions and its ESG Environmental Score.</p>
                     <ul className="list-disc list-inside mt-2 space-y-1 text-xs">
                       <li>Big polluters can receive high ESG scores</li>
@@ -318,9 +444,13 @@ export default function Home() {
               </details>
             </div>
 
-            {/* Climate Language Metrics Card */}
+            {/* Climate Language Analysis Card */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow cursor-pointer group">
-              <div className="text-4xl mb-3">🤖</div>
+              <div className="w-16 h-16 mb-3 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg flex items-center justify-center">
+                <svg className="w-8 h-8 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-[#076912] transition-colors">
                 Climate Language Metrics — Analyzing What Companies Say
               </h3>
@@ -362,7 +492,11 @@ export default function Home() {
           {/* Greenwash Residual Index Card - Full Width */}
           <div className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200 rounded-lg p-8 shadow-lg">
             <div className="text-center mb-4">
-              <div className="text-5xl mb-3">🧮</div>
+              <div className="w-20 h-20 mx-auto mb-3 bg-gradient-to-br from-green-200 to-blue-200 rounded-xl flex items-center justify-center">
+                <svg className="w-10 h-10 text-green-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 The Greenwash Residual Index — Measuring the "Talk vs Walk" Gap
               </h3>
@@ -412,12 +546,82 @@ export default function Home() {
               <div className="bg-white p-8 rounded-lg">
                 <EmissionsBarChart />
               </div>
+              
+              {/* Mary's Interactive Visualizations */}
+              <div className="bg-white p-8 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Industry Distribution Analysis</h3>
+                <iframe 
+                  src="/analysis_outputs/pie_industry_all.html" 
+                  className="w-full h-[600px] border-0"
+                  title="Industry Mix Chart"
+                />
+              </div>
+
+              <div className="bg-gray-50 p-8 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">ESG Predictions vs Actual Scores</h3>
+                <div className="max-w-3xl mx-auto mb-6">
+                  <p className="text-base text-gray-700 leading-relaxed text-center">
+                    We developed a predictive model to estimate emissions based on ESG environmental data. <span className="font-semibold text-orange-700">Companies positioned above the regression line</span> are emitting more greenhouse gases than their ESG scores would predict, revealing potential greenwashing.
+                  </p>
+                </div>
+                <iframe 
+                  src="/analysis_outputs/scatter_esg_pred_vs_actual.html" 
+                  className="w-full h-[600px] border-0"
+                  title="ESG Predictions Scatter Plot"
+                />
+              </div>
+
+              <div className="bg-white p-8 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Language Analysis Predictions vs Actual</h3>
+                <div className="max-w-3xl mx-auto mb-6">
+                  <p className="text-base text-gray-700 leading-relaxed text-center">
+                    We trained a predictive model to estimate emissions based on AI-analyzed climate language patterns from sustainability reports. <span className="font-semibold text-orange-700">Companies positioned above the regression line</span> use language suggesting lower environmental impact than their actual emissions demonstrate.
+                  </p>
+                </div>
+                <iframe 
+                  src="/analysis_outputs/scatter_language_pred_vs_actual.html" 
+                  className="w-full h-[600px] border-0"
+                  title="Language Analysis Scatter Plot"
+                />
+              </div>
+
+              <div className="bg-gray-50 p-8 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Top Greenwashers vs Climate Winners</h3>
+                <iframe 
+                  src="/analysis_outputs/top7_greenwashers_vs_winners.html" 
+                  className="w-full h-[600px] border-0"
+                  title="Greenwashers vs Winners Comparison"
+                />
+              </div>
+
+              <div className="bg-white p-8 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Greenwashing Explainability - Top 7 Companies</h3>
+                <div className="max-w-4xl mx-auto mb-6">
+                  <p className="text-base text-gray-700 leading-relaxed text-center mb-3">
+                    The <span className="font-semibold text-[#076912]">Greenwash Residual Index (GRI)</span> measures the gap between what companies say and what they actually emit. We predict emissions from their climate language, then calculate the residual difference from actual reported emissions.
+                  </p>
+                  <div className="bg-gradient-to-r from-yellow-50 via-orange-50 to-red-50 border-l-4 border-red-500 p-4">
+                    <p className="text-base font-semibold text-red-900 text-center">
+                      Higher GRI values (shown in red) indicate more severe greenwashing — where language significantly understates actual environmental impact.
+                    </p>
+                  </div>
+                </div>
+                <iframe 
+                  src="/analysis_outputs/top7_greenwash_explainability_table.html" 
+                  className="w-full h-[700px] border-0"
+                  title="Greenwashing Explainability Table"
+                />
+              </div>
+
+              <div className="bg-gray-50 p-8 rounded-lg shadow-lg">
+                <TCFDPieCharts />
+              </div>
             </div>
           )}
         </div>
       </section>
 
-      <section className="relative w-full items-center justify-center bg-[url(/reportbckg.jpeg)] bg-cover bg-center dark:bg-black p-12">
+      <section id="company-reports" className="relative w-full items-center justify-center bg-[url(/reportbckg.jpeg)] bg-cover bg-center dark:bg-black p-12">
         <div className="w-full">
           <h2 className="text-3xl font-semibold text-black dark:text-white mb-4 text-center">Browse Company Sustainability Reports</h2>
           <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 text-center">
