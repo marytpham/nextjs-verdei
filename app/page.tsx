@@ -555,6 +555,10 @@ export default function Home() {
                 </div>
                 <EmissionsBarChart />
               </div>
+
+              <div className="bg-gray-50 p-8 rounded-lg shadow-lg">
+                <TCFDPieCharts />
+              </div>
               
               {/* Mary's Interactive Visualizations */}
               <div className="bg-white p-8 rounded-lg shadow-lg">
@@ -620,10 +624,6 @@ export default function Home() {
                   className="w-full h-[700px] border-0"
                   title="Greenwashing Explainability Table"
                 />
-              </div>
-
-              <div className="bg-gray-50 p-8 rounded-lg shadow-lg">
-                <TCFDPieCharts />
               </div>
             </div>
           )}
