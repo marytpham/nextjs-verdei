@@ -205,7 +205,7 @@ export default function Home() {
             height={36}
             priority
           />
-          <h1 className="text-4xl flex font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+          <h1 className="text-5xl md:text-6xl flex font-semibold leading-tight tracking-tight text-black dark:text-zinc-50">
             Know the Real Score.
           </h1>
           <p className="max-w-xl text-lg leading-6 text-zinc-600 dark:text-zinc-400">
@@ -313,7 +313,10 @@ export default function Home() {
 
               {/* Visualization Section */}
               <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-xl p-8 border border-gray-100">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6 text-center">Global CO₂ Emissions Per Capita</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-3 text-center">Global CO₂ Emissions Per Capita</h3>
+                <p className="text-center text-gray-700 mb-6 max-w-3xl mx-auto">
+                  Our analysis focuses on top US companies as the United States is the second largest global emitter of greenhouse gases, making corporate accountability in this region particularly critical.
+                </p>
                 <div className="bg-white rounded-lg shadow-inner p-4">
                   <iframe 
                     src="https://ourworldindata.org/grapher/co-emissions-per-capita?tab=line" 
