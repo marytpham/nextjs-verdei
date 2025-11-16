@@ -548,6 +548,11 @@ export default function Home() {
                 <ScatterPlot />
               </div>
               <div className="bg-white p-8 rounded-lg">
+                <div className="mb-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
+                  <p className="text-gray-700 text-sm">
+                    <strong>Note:</strong> Our analysis focuses on top US companies as the United States is the second largest global emitter of greenhouse gases, making corporate accountability in this region particularly critical.
+                  </p>
+                </div>
                 <EmissionsBarChart />
               </div>
               
