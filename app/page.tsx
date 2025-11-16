@@ -201,8 +201,8 @@ export default function Home() {
             className="dark:invert mb-4"
             src="/Verde-i.png"
             alt="verde-i logo"
-            width={100}
-            height={20}
+            width={180}
+            height={36}
             priority
           />
           <h1 className="text-4xl flex font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
