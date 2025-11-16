@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { Card, type BackendCompanyData } from "./src/card";
-import { Infocard } from "./src/infocard";
 import { Modal, type ModalItem } from "./src/modal";
 import { ScatterPlot } from "./src/scatterplot";
 import { EmissionsBarChart } from "./src/barchart";
@@ -771,8 +770,6 @@ export default function Home() {
             </div>
             </details>
           </div>
-
-          <Infocard />
             </div>
           )}
 
