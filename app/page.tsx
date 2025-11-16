@@ -199,7 +199,7 @@ export default function Home() {
         <div className="relative z-10 flex flex-col items-center gap-6 text-center">
           <Image
             className="dark:invert mb-4"
-            src="/verde-i.png"
+            src="/Verde-i.png"
             alt="verde-i logo"
             width={100}
             height={20}
