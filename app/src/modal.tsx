@@ -41,7 +41,7 @@ export const Modal = ({ isOpen, onClose, item }: ModalProps) => {
                             
                             {data.modelOutputsRating !== undefined && (
                                 <div className="flex justify-between items-center">
-                                    <span className="text-black dark:text-white">Model Outputs / Data Quality:</span>
+                                    <span className="text-black dark:text-white">Relatedness:</span>
                                     <StarRating rating={data.modelOutputsRating} />
                                 </div>
                             )}
